@@ -4,7 +4,7 @@ import os
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 from utils import ArgumentParser, ConfigLoader, LOG
-from model import GLMModel, OpenAIModel
+from model import OpenAIModel
 from translator import PDFTranslator
 
 if __name__ == "__main__":
@@ -22,6 +22,13 @@ if __name__ == "__main__":
     pdf_file_path = args.book if args.book else config['common']['book']
     file_format = args.file_format if args.file_format else config['common']['file_format']
 
+    # 翻译成不同语言
+    target_language = args.book if args.book else config['common']['book']
+
     # 实例化 PDFTranslator 类，并调用 translate_pdf() 方法
     translator = PDFTranslator(model)
-    translator.translate_pdf(pdf_file_path, file_format)
+    translator.translate_pdf(
+        pdf_file_path=pdf_file_path,
+        file_format=file_format,
+        target_language=target_language
+    )
